@@ -1,10 +1,10 @@
-sudo bash -c "cat <<EOT > /etc/ansible/roles/web/tasks/main.yml
+sudo bash -c "cat <<EOT > /etc/ansible/roles/web2/tasks/main.yml
 ---
 - include_tasks: install.yml
 EOT
 "
 
-sudo bash -c "cat <<EOT > /etc/ansible/roles/web/tasks/install.yml
+sudo bash -c "cat <<EOT > /etc/ansible/roles/web2/tasks/install.yml
 ---
 - name: Install nginx
   apt:
@@ -14,13 +14,13 @@ sudo bash -c "cat <<EOT > /etc/ansible/roles/web/tasks/install.yml
 EOT
 "
 
-sudo bash -c "cat <<EOT > /etc/ansible/roles/web/handlers/main.yml
+sudo bash -c "cat <<EOT > /etc/ansible/roles/web2/handlers/main.yml
 ---
 - include_tasks: handler.yml
 EOT
 "
 
-sudo bash -c "cat <<EOT > /etc/ansible/roles/web/handlers/handler.yml
+sudo bash -c "cat <<EOT > /etc/ansible/roles/web2/handlers/handler.yml
 ---
 - name: Restart nginx
   service:
