@@ -26,6 +26,7 @@ bash -c 'cat <<EOT >> play.yml
         name: mysql
         state: started
         enabled: yes
-EOT
-'
+        
+ EOT
+ ' 
 
