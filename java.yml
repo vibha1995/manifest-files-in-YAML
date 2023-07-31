@@ -1,6 +1,6 @@
 bash -c 'cat <<EOT >> play.yml
 ---
-- hosts: web
+- hosts: node01
   become: true
   become_user: root
 
@@ -10,7 +10,11 @@ bash -c 'cat <<EOT >> play.yml
         update_cache: yes
         name: openjdk-11-jdk
         state: present
+ - hosts: node01
+   become: true
+   become_user: root
 
+   tasks:
     - name: Install MySQL Server on Ubuntu
       apt:
         update_cache: yes
