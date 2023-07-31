@@ -1,0 +1,7 @@
+echo " hello world from apache2" > 1.txt
+ - name: Writting a script
+ copy: 
+ src: /tmp.1.txt
+ dest: /tmp.1.txt
+ owner: ubuntu
+ group: ubuntu
