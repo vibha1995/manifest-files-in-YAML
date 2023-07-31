@@ -1,17 +1,16 @@
-
 sudo bash -c "cat <<EOT > /etc/ansible/roles/web/tasks/main.yml
 ---
 - include_tasks: install.yml
-
 EOT
 "
+
 sudo bash -c "cat <<EOT > /etc/ansible/roles/web/tasks/install.yml
 ---
- - name: Install nginx
- apt:
- name: nginx
- state: latest
- update_cache: yes
+- name: Install nginx
+  apt:
+    name: nginx
+    state: latest
+    update_cache: yes
 EOT
 "
 
@@ -20,12 +19,12 @@ sudo bash -c "cat <<EOT > /etc/ansible/roles/web/handlers/main.yml
 - include_tasks: handler.yml
 EOT
 "
+
 sudo bash -c "cat <<EOT > /etc/ansible/roles/web/handlers/handler.yml
 ---
- - name: Restart nginx
- service:
- name: nginx
- state: restarted
+- name: Restart nginx
+  service:
+    name: nginx
+    state: restarted
 EOT
 "
-
