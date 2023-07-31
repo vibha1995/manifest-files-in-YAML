@@ -1,7 +1,11 @@
-echo " hello world from apache2" > 1.txt
- - name: Writting a script
- copy: 
- src: /tmp.1.txt
- dest: /tmp.1.txt
- owner: ubuntu
- group: ubuntu
+---
+- hosts: node01,node02
+  become: true
+  become_user: root
+
+  tasks:
+    - name: Add text to /tmp/1.txt
+      lineinfile:
+        path: /tmp/1.txt
+        line: "This text has been added by custom script"
+        create: yes
