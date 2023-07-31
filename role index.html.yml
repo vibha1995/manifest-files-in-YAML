@@ -1,0 +1,32 @@
+sudo bash -c "cat <<EOT > /etc/ansible/roles/web2/tasks/main.yml
+---
+- include_tasks: configure.yml
+EOT
+"
+
+sudo bash -c "cat <<EOT > /etc/ansible/roles/web2/tasks/configure.yml
+---
+- name: Configure website
+  copy:
+    src: index.html
+    dest: /var/www/html
+  notify:
+    - Restart nginx 
+EOT
+"
+
+sudo bash -c "cat <<EOT > /etc/ansible/roles/web2/handlers/main.yml
+---
+- include_tasks: handler.yml
+EOT
+"
+
+sudo bash -c "cat <<EOT > /etc/ansible/roles/web2/handlers/handler.yml
+---
+- name: Restart nginx
+  service:
+    name: nginx
+    state: restarted
+EOT
+"
+
