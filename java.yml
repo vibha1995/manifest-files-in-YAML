@@ -2,8 +2,24 @@
 - hosts: web
   become: true
   become_user: root
+
   tasks:
-  - name: Install java
-    apt:  update_cache=yes name=openjdk-11-jdk state=present
-  - name: Install maven
-    apt:  name=maven state=present
+    - name: Install java
+      apt:
+        update_cache: yes
+        name: openjdk-11-jdk
+        state: present
+
+    - name: Install MySQL Server on Ubuntu
+      apt:
+        update_cache: yes
+        name: mysql-server
+        state: present
+
+    - name: Start MySQL service and enable it at boot
+      service:
+        name: mysql
+        state: started
+        enabled: yes
+
+
