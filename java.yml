@@ -1,6 +1,7 @@
 bash -c 'cat <<EOT >> play.yml
 ---
-- hosts: node01
+- name: Install Java on node01
+  hosts: node01
   become: true
   become_user: root
 
@@ -10,11 +11,13 @@ bash -c 'cat <<EOT >> play.yml
         update_cache: yes
         name: openjdk-11-jdk
         state: present
- - hosts: node01
-   become: true
-   become_user: root
 
-   tasks:
+- name: Install MySQL on node02
+  hosts: node02
+  become: true
+  become_user: root
+
+  tasks:
     - name: Install MySQL Server on Ubuntu
       apt:
         update_cache: yes
@@ -26,7 +29,5 @@ bash -c 'cat <<EOT >> play.yml
         name: mysql
         state: started
         enabled: yes
-        
- EOT
- ' 
-
+EOT
+'
