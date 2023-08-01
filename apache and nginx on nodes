@@ -1,0 +1,22 @@
+bash -c 'cat <<EOT > play.yml
+---
+- hosts: apache2
+  become: yes
+  name: Installing apache2 on node01
+  tasks:
+    - name: Install apache2
+      apt: 
+        update_cache: yes
+        name: apache2
+        state: latest
+
+- hosts: nginx
+  become: yes
+  name: Installing nginx on node02
+  tasks:
+    - name: Installing nginx
+      apt: 
+        name: nginx 
+        state: latest
+EOT
+'
