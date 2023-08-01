@@ -1,0 +1,40 @@
+sudo bash -c "cat <<EOT > /etc/ansible/roles/apache/tasks/main.yml
+---
+- include_tasks: install_java.yml
+- include_tasks: install_apache.yml
+
+EOT
+"
+sudo bash -c "cat <<EOT > /etc/ansible/roles/apache/tasks/install_java.yml
+---
+- name: Install Java
+  apt:
+    name: openjdk-11-jdk
+    state: present
+    update_cache: yes
+EOT
+"
+
+sudo bash -c "cat <<EOT > /etc/ansible/roles/apache/tasks/install_apache.yml
+---
+- name: Install Apache2
+  apt:
+    name: apache2
+    state: latest
+    update_cache: yes
+EOT
+"
+
+sudo bash -c "cat <<EOT > /etc/ansible/roles/apache/handlers/main.yml
+---
+- include_tasks: handler.yml
+EOT
+"
+sudo bash -c "cat <<EOT > /etc/ansible/roles/apache/handlers/handler.yml
+---
+- name: Restart Apache
+  service:
+    name: apache2
+    state: restarted
+EOT
+"
