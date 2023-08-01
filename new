@@ -1,25 +1,15 @@
-sudo bash -c "cat <<EOT > /etc/ansible/roles/apache/tasks/main.yml
+sudo bash -c "cat <<EOT > /etc/ansible/roles/nginx/tasks/main.yml
 ---
-- include_tasks: install_java.yml
-- include_tasks: install_apache.yml
+- include_tasks: install_nginx.yml
 
 EOT
 "
-sudo bash -c "cat <<EOT > /etc/ansible/roles/apache/tasks/install_java.yml
----
-- name: Install Java
-  apt:
-    name: openjdk-11-jdk
-    state: present
-    update_cache: yes
-EOT
-"
 
-sudo bash -c "cat <<EOT > /etc/ansible/roles/apache/tasks/install_apache.yml
+sudo bash -c "cat <<EOT > /etc/ansible/roles/nginx/tasks/install_nginx.yml
 ---
-- name: Install Apache2
+- name: Install nginx
   apt:
-    name: apache2
+    name: nginx
     state: latest
     update_cache: yes
 EOT
@@ -30,11 +20,11 @@ sudo bash -c "cat <<EOT > /etc/ansible/roles/apache/handlers/main.yml
 - include_tasks: handler.yml
 EOT
 "
-sudo bash -c "cat <<EOT > /etc/ansible/roles/apache/handlers/handler.yml
+sudo bash -c "cat <<EOT > /etc/ansible/roles/nginx/handlers/handler.yml
 ---
-- name: Restart Apache
+- name: Restart nginx
   service:
-    name: apache2
+    name: nginx
     state: restarted
 EOT
 "
