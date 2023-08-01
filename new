@@ -15,7 +15,7 @@ sudo bash -c "cat <<EOT > /etc/ansible/roles/nginx/tasks/install_nginx.yml
 EOT
 "
 
-sudo bash -c "cat <<EOT > /etc/ansible/roles/apache/handlers/main.yml
+sudo bash -c "cat <<EOT > /etc/ansible/roles/nginx/handlers/main.yml
 ---
 - include_tasks: handler.yml
 EOT
@@ -28,3 +28,4 @@ sudo bash -c "cat <<EOT > /etc/ansible/roles/nginx/handlers/handler.yml
     state: restarted
 EOT
 "
+
