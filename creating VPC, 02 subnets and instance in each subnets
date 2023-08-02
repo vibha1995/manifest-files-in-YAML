@@ -1,0 +1,84 @@
+
+
+provider "aws" {
+  region = "us-east-2" # Replace this with your desired AWS region
+}
+
+# Create a VPC
+resource "aws_vpc" "my_vpc" {
+  cidr_block = "10.0.0.0/16"
+  tags       = { Name = "MyVPC" }
+}
+
+# Create two subnets in different availability zones
+resource "aws_subnet" "subnet1" {
+  vpc_id            = aws_vpc.my_vpc.id
+  cidr_block        = "10.0.1.0/24"
+  availability_zone = "us-east-2a"
+  tags              = { Name = "Subnet1" }
+}
+
+resource "aws_subnet" "subnet2" {
+  vpc_id            = aws_vpc.my_vpc.id
+  cidr_block        = "10.0.2.0/24"
+  availability_zone = "us-east-2b"
+  tags              = { Name = "Subnet2" }
+}
+
+# Create security group allowing incoming SSH and HTTP traffic
+resource "aws_security_group" "my_security_group" {
+  name_prefix = "MySecurityGroup"
+  
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+# Create an internet gateway
+resource "aws_internet_gateway" "my_igw" {
+  vpc_id = aws_vpc.my_vpc.id
+}
+
+# Create network interfaces with security groups for each subnet
+resource "aws_network_interface" "eni1" {
+  subnet_id       = aws_subnet.subnet1.id
+  security_groups = [aws_security_group.my_security_group.id]
+}
+
+resource "aws_network_interface" "eni2" {
+  subnet_id       = aws_subnet.subnet2.id
+  security_groups = [aws_security_group.my_security_group.id]
+}
+
+# Create an EC2 instance in each subnet
+resource "aws_instance" "instance1" {
+  ami                    = "ami-063930f9047faa3bd"    # Replace with the Ubuntu AMI ID
+  instance_type          = "t2.micro"
+  key_name               = "ohio"        # Replace with your SSH key pair name
+  associate_public_ip_address = true
+}
+
+resource "aws_instance" "instance2" {
+  ami                    = "ami-063930f9047faa3bd"     # Replace with the Ubuntu AMI ID
+  instance_type          = "t2.micro"
+  key_name               = "ohio"           # Replace with your SSH key pair name
+  associate_public_ip_address = true
+}
+
